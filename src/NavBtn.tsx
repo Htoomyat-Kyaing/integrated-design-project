@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 
-const NavBtn = ({ title }: any) => {
+const NavBtn = ({ img, title }: any) => {
+  let dir = title.toString().toLowerCase();
   return (
-    <>
-      <li>
-        <Link to={`/`}>{title}</Link>
-      </li>
-    </>
+    <li className="flex">
+      <img src={img} className="w-6 h-6 mr-4" />
+      <Link to={`/${dir}`}>{title}</Link>
+    </li>
   );
 };
 
