@@ -11,7 +11,7 @@ import Help from "./Help";
 
 function App() {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-slate-200 dark:bg-slate-800 dark:text-white">
       <BrowserRouter>
         <Nav />
         <Routes>
