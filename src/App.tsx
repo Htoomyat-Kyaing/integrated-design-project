@@ -20,7 +20,7 @@ function App() {
     <div className="flex h-screen">
       <BrowserRouter>
         <Nav />
-        <div className="flex flex-col w-full h-full text-black dark:text-white bg-slate-200 dark:bg-slate-800">
+        <div className="flex flex-col w-full h-full overflow-auto text-black dark:text-white bg-slate-200 dark:bg-slate-800">
           <Dashboard darkToggle={darkToggle} />
           <Routes>
             <Route path="/" element={<Home />} />
