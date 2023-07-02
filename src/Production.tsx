@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Production = () => {
   return (
     <main className="flex items-center justify-center h-full">
@@ -6,7 +8,7 @@ const Production = () => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
-            className="w-40 h-40 dark:text-gray-600"
+            className="w-40 h-40 text-slate-800 dark:text-gray-600"
           >
             <path
               fill="currentColor"
@@ -31,13 +33,11 @@ const Production = () => {
           <p className="text-3xl">
             Looks like our services are currently offline
           </p>
-          <a
-            rel="noopener noreferrer"
-            href="#"
-            className="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900"
-          >
-            Back to homepage
-          </a>
+          <Link to={"/"}>
+            <p className="px-8 py-3 font-semibold bg-indigo-600 rounded text-slate-50 dark:bg-sky-400 dark:text-gray-900">
+              Back to homepage
+            </p>
+          </Link>
         </div>
       </section>
     </main>

@@ -11,7 +11,7 @@ const Home = () => {
             your workforce
           </h1>
           <p className="px-8 mt-8 mb-12 text-lg">
-            with our powerful employee management system ,empowering your
+            with our powerful employee management system, empowering your
             organization to thrive!
           </p>
 
