@@ -47,7 +47,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/today" element={<Today />} />
-            <Route path="/attendance" element={<Attendance />} />
+            <Route
+              path="/attendance"
+              element={<Attendance employees={employees} />}
+            />
             <Route
               path="/employees"
               element={<Employees employees={employees} />}

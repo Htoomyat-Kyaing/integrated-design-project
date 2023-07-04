@@ -1,6 +1,6 @@
 const Dashboard = ({ darkToggle }: any) => {
   return (
-    <div className="flex items-center justify-end w-full p-3 sm:p-4 md:p-5 lg:p-6 min-h-max bg-slate-600 dark:bg-slate-900">
+    <div className="sticky top-0 flex items-center justify-end w-full p-3 sm:p-4 md:p-5 lg:p-6 min-h-max bg-slate-600 dark:bg-slate-900">
       <label className="swap swap-rotate">
         {/* this hidden checkbox controls the state */}
         <input
