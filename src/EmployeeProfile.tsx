@@ -1,13 +1,11 @@
-import employee_placeholder from "./assets/unknown_employee.png";
-
 const EmployeeProfile = ({ employee }: any) => {
   return (
     <div className="flex flex-col items-center justify-center w-full p-12 bg-white rounded-lg shadow-lg dark:bg-gray-900">
       <div className="mb-8">
         <div className="flex items-center justify-center p-1 rounded-full bg-gradient-to-b from-blue-400 to-violet-600 h-36 w-36">
           <img
-            className="object-cover object-center bg-white rounded-full dark:bg-slate-900 w-34 h-34"
-            src={employee_placeholder}
+            className="object-cover object-center w-full h-full bg-white rounded-full dark:bg-slate-900"
+            src={`https://cbmasaqglquxmvqcfixl.supabase.co/storage/v1/object/public/images/${employee.first_name}_${employee.last_name}_${employee.id}.jpg`}
             alt="photo"
           />
         </div>
