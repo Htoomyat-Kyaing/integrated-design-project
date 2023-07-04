@@ -1,10 +1,12 @@
+import employee_placeholder from "./assets/unknown_employee.png";
+
 const EmployeeProfile = ({ employee }: any) => {
   return (
     <div className="flex flex-col items-center justify-center w-full p-12 bg-white rounded-lg shadow-lg dark:bg-gray-900">
       <div className="mb-8">
         <img
           className="object-cover object-center rounded-full h-36 w-36"
-          src="/src/assets/unknown_employee.png"
+          src={employee_placeholder}
           alt="photo"
         />
       </div>
