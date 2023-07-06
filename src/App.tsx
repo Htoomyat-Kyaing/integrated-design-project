@@ -1,7 +1,6 @@
 import Nav from "./Nav";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Today from "./Today";
-import Attendance from "./Attendance";
 import Employees from "./Employees";
 import Home from "./Home";
 import Production from "./Production";
@@ -11,6 +10,7 @@ import Help from "./Help";
 import Dashboard from "./Dashboard";
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
+import Record from "./Record";
 
 const supabase = createClient(
   "https://cbmasaqglquxmvqcfixl.supabase.co",
@@ -39,18 +39,10 @@ function App() {
         <Nav />
         <div className="flex flex-col w-full h-full overflow-auto text-black dark:text-white bg-slate-200 dark:bg-slate-800">
           <Dashboard darkToggle={darkToggle} />
-          {/* <ul>
-            {employees.map((employee: any) => (
-              <li key={employee.id}>{employee.first_name}</li>
-            ))}
-          </ul> */}
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/today" element={<Today />} />
-            <Route
-              path="/attendance"
-              element={<Attendance employees={employees} />}
-            />
+            <Route path="/today" element={<Today employees={employees} />} />
+            <Route path="/record" element={<Record />} />
             <Route
               path="/employees"
               element={<Employees employees={employees} />}

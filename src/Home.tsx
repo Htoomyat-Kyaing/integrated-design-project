@@ -16,7 +16,7 @@ const Home = () => {
           </p>
 
           <div className="flex flex-wrap justify-center">
-            <Link to={"/attendance"}>
+            <Link to={"/today"}>
               <button className="px-8 py-3 m-2 text-lg font-semibold text-white bg-indigo-600 rounded dark:bg-sky-400 dark:text-slate-800">
                 Get started
               </button>

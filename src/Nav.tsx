@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "./assets/logo.png";
 import icon_today from "./assets/calendar.png";
-import icon_attendance from "./assets/attendance.png";
+import icon_record from "./assets/attendance.png";
 import icon_employees from "./assets/employees.png";
 import icon_production from "./assets/factory.png";
 import icon_analytics from "./assets/hand.png";
@@ -21,7 +21,7 @@ const Nav = () => {
         <ul className="flex flex-col justify-between h-full gap-4 my-4">
           <div className="flex flex-col items-center justify-between gap-4 md:items-start">
             <NavBtn img={icon_today} title={"Today"} />
-            <NavBtn img={icon_attendance} title={"Attendance"} />
+            <NavBtn img={icon_record} title={"Record"} />
             <NavBtn img={icon_employees} title={"Employees"} />
             <NavBtn img={icon_production} title={"Production"} />
             <NavBtn img={icon_analytics} title={"Analytics"} />
