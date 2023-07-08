@@ -10,7 +10,7 @@ import Help from "./Help";
 import Dashboard from "./Dashboard";
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
-import Record from "./Record";
+import Records from "./Records";
 
 const supabase = createClient(
   "https://cbmasaqglquxmvqcfixl.supabase.co",
@@ -23,14 +23,24 @@ function App() {
     else document.documentElement.classList.remove("dark");
   };
   const [employees, setEmployees] = useState([]);
+  const [records, setRecords] = useState([]);
 
   useEffect(() => {
     getEmployees();
+    getRecords();
   }, []);
 
   async function getEmployees() {
-    const { data }: any = await supabase.from("employees").select();
-    setEmployees(data);
+    let { data: employees }: any = await supabase.from("employees").select("*");
+    setEmployees(employees);
+  }
+
+  async function getRecords() {
+    let { data: records }: any = await supabase.from("records").select(`
+	*,
+	employees(*)
+`);
+    setRecords(records);
   }
 
   return (
@@ -42,7 +52,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/today" element={<Today employees={employees} />} />
-            <Route path="/record" element={<Record />} />
+            <Route path="/records" element={<Records records={records} />} />
             <Route
               path="/employees"
               element={<Employees employees={employees} />}

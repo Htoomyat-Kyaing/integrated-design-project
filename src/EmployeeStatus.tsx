@@ -7,7 +7,12 @@ const EmployeeStatus = ({ employee }: any) => {
         <div
           className={`flex items-center justify-center p-1 rounded-full h-36 w-36`}
         >
-          <img className="" src={employee_placeholder} alt="photo" />
+          <img
+            className=""
+            src={employee_placeholder}
+            alt="photo"
+            loading="lazy"
+          />
         </div>
       </div>
       <div className="">

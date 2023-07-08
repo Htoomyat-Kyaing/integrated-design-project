@@ -7,6 +7,7 @@ const EmployeeProfile = ({ employee }: any) => {
             className="object-cover object-center w-full h-full bg-white rounded-full dark:bg-slate-900"
             src={`https://cbmasaqglquxmvqcfixl.supabase.co/storage/v1/object/public/images/${employee.first_name}_${employee.last_name}_${employee.id}.jpg`}
             alt="photo"
+            loading="lazy"
           />
         </div>
       </div>
