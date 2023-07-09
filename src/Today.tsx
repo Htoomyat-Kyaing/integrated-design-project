@@ -38,7 +38,7 @@ const Today = ({ employees }: any) => {
               />
             </svg>
 
-            <button className="px-6 py-2 font-semibold leading-5 text-white transition-colors duration-200 transform bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-gray-600 dark:bg-sky-400 dark:hover:bg-sky-500 dark:text-black">
+            <button className="px-6 py-2 font-semibold leading-5 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none dark:bg-sky-400 dark:hover:bg-sky-500 dark:text-black">
               Save Record
             </button>
           </div>
