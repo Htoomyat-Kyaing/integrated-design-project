@@ -84,7 +84,7 @@ const Settings = () => {
             </div>
           </div>
           <div className="flex justify-end py-6">
-            <button className="px-6 py-2 font-semibold leading-5 text-black transition-colors duration-200 transform rounded-md bg-violet-400 hover:bg-violet-500 focus:outline-none focus:bg-gray-600 dark:bg-sky-400 dark:hover:bg-sky-500">
+            <button className="px-6 py-2 font-semibold leading-5 text-white transition-colors duration-200 transform bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-gray-600 dark:bg-sky-400 dark:hover:bg-sky-500 dark:text-black">
               Save
             </button>
           </div>
