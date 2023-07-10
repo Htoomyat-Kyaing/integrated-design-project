@@ -28,6 +28,25 @@ function App() {
   useEffect(() => {
     getEmployees();
     getRecords();
+    // realtime subscribe
+    supabase.channel('custom-all-channel')
+  .on(
+    'postgres_changes',
+    { event: '*', schema: 'public', table: 'employees' },
+    (payload) => {
+      console.log('Change received!', payload)
+      getEmployees();
+    }
+  )
+  .on(
+    'postgres_changes',
+    { event: '*', schema: 'public', table: 'records' },
+    (payload) => {
+      console.log('Change received!', payload)
+      getRecords();
+    }
+  )
+  .subscribe()
   }, []);
 
   async function getEmployees() {

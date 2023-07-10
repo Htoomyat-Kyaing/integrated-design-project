@@ -1,17 +1,53 @@
+import { useState } from "react";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  "https://cbmasaqglquxmvqcfixl.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNibWFzYXFnbHF1eG12cWNmaXhsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODgzNjY4OTgsImV4cCI6MjAwMzk0Mjg5OH0.pO0-_dEwjZeViEsPABf0l1M1wjXDgENB1XsmYcVULXg"
+);
+
 const Settings = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [id, setId] = useState();
+  const [age, setAge] = useState();
+  const [position, setPosition] = useState("");
+
+  const insertEmployee = async({id,firstName,lastName,age,position}:any)=>{
+    const { data, error } = await supabase
+    .from('employees')
+    .insert([
+      { id: id,first_name:firstName, last_name:lastName,age:age,position:position,today:false },
+    ])
+    .select()
+    if(data){
+      console.log(data)
+    }else{
+      console.log(error)
+    }
+    } 
+
   return (
     <main className="flex flex-col items-center justify-center h-full">
       <section className="w-full h-full p-6 mx-auto bg-slate-200 dark:bg-gray-800">
         <h1 className="text-xl font-bold text-black capitalize dark:text-sky-400">
           Add New Employee
         </h1>
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            insertEmployee({id,firstName,lastName,age,position});
+          }}
+        >
           <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <div>
               <label className="text-black dark:text-gray-200">ID</label>
               <input
                 type="text"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                onChange={(e: any) => {
+                  setId(e.target.value);
+                }}
               />
             </div>
             <div>
@@ -21,6 +57,9 @@ const Settings = () => {
               <input
                 type="text"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                onChange={(e: any) => {
+                  setFirstName(e.target.value);
+                }}
               />
             </div>
             <div>
@@ -28,6 +67,9 @@ const Settings = () => {
               <input
                 type="text"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                onChange={(e: any) => {
+                  setLastName(e.target.value);
+                }}
               />
             </div>
             <div>
@@ -35,6 +77,9 @@ const Settings = () => {
               <input
                 type="text"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                onChange={(e: any) => {
+                  setAge(e.target.value);
+                }}
               />
             </div>
             <div>
@@ -42,6 +87,9 @@ const Settings = () => {
               <input
                 type="text"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                onChange={(e: any) => {
+                  setPosition(e.target.value);
+                }}
               />
             </div>
 
