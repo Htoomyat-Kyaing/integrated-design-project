@@ -1,7 +1,27 @@
 import EmployeeStatus from "./EmployeeStatus";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  "https://cbmasaqglquxmvqcfixl.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNibWFzYXFnbHF1eG12cWNmaXhsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODgzNjY4OTgsImV4cCI6MjAwMzk0Mjg5OH0.pO0-_dEwjZeViEsPABf0l1M1wjXDgENB1XsmYcVULXg"
+);
 
 const Today = ({ employees }: any) => {
   const empAscending = [...employees].sort((a, b) => a.id - b.id);
+  const insertRecord = async(emp:any)=>{
+    const { data, error } = await supabase
+    .from('records')
+    .insert([
+      { employee_id: emp.id, status: emp.today },
+    ])
+    .select()
+    if(data){
+      console.log(data)
+    }else{
+      console.log(error)
+    }
+    } 
+  
   return (
     <main className="flex items-center justify-center h-full">
       <div className="flex flex-grow w-full h-full">
@@ -39,7 +59,11 @@ const Today = ({ employees }: any) => {
               />
             </svg>
 
-            <button className="px-6 py-2 font-semibold leading-5 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none dark:bg-sky-400 dark:hover:bg-sky-500 dark:text-black">
+            <button className="px-6 py-2 font-semibold leading-5 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none dark:bg-sky-400 dark:hover:bg-sky-500 dark:text-black" onClick={()=>{
+              employees.forEach((emp:any)=>{
+                insertRecord(emp)
+              })
+            }}>
               Save Record
             </button>
           </div>
