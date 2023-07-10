@@ -13,33 +13,51 @@ const Settings = () => {
   const [age, setAge] = useState();
   const [position, setPosition] = useState("");
 
-  const insertEmployee = async({id,firstName,lastName,age,position}:any)=>{
+  // Add Form onSubmit function
+  const insertEmployee = async ({
+    id,
+    firstName,
+    lastName,
+    age,
+    position,
+  }: any) => {
     const { data, error } = await supabase
-    .from('employees')
-    .insert([
-      { id: id,first_name:firstName, last_name:lastName,age:age,position:position,today:false },
-    ])
-    .select()
-    if(data){
-      console.log(data)
-    }else{
-      console.log(error)
+      .from("employees")
+      .insert([
+        {
+          id: id,
+          first_name: firstName,
+          last_name: lastName,
+          age: age,
+          position: position,
+          today: false,
+        },
+      ])
+      .select();
+    if (data) {
+      console.log(data);
+    } else {
+      console.log(error);
     }
-    } 
+  };
 
   return (
     <main className="flex flex-col items-center justify-center h-full">
       <section className="w-full h-full p-6 mx-auto bg-slate-200 dark:bg-gray-800">
+        {/* Heading */}
         <h1 className="text-xl font-bold text-black capitalize dark:text-sky-400">
           Add New Employee
         </h1>
+
+        {/* Add Form */}
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            insertEmployee({id,firstName,lastName,age,position});
+            insertEmployee({ id, firstName, lastName, age, position });
           }}
         >
           <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+            {/* ID */}
             <div>
               <label className="text-black dark:text-gray-200">ID</label>
               <input
@@ -48,8 +66,10 @@ const Settings = () => {
                 onChange={(e: any) => {
                   setId(e.target.value);
                 }}
+                required
               />
             </div>
+            {/* First Name */}
             <div>
               <label className="text-black dark:text-gray-200">
                 First Name
@@ -60,8 +80,10 @@ const Settings = () => {
                 onChange={(e: any) => {
                   setFirstName(e.target.value);
                 }}
+                required
               />
             </div>
+            {/* Last Name */}
             <div>
               <label className="text-black dark:text-gray-200">Last Name</label>
               <input
@@ -70,8 +92,10 @@ const Settings = () => {
                 onChange={(e: any) => {
                   setLastName(e.target.value);
                 }}
+                required
               />
             </div>
+            {/* Age */}
             <div>
               <label className="text-black dark:text-gray-200">Age</label>
               <input
@@ -80,8 +104,10 @@ const Settings = () => {
                 onChange={(e: any) => {
                   setAge(e.target.value);
                 }}
+                required
               />
             </div>
+            {/* Position */}
             <div>
               <label className="text-black dark:text-gray-200">Position</label>
               <input
@@ -93,7 +119,9 @@ const Settings = () => {
               />
             </div>
 
-            <div>
+            {/* // TODO: implement later */}
+            {/* Image */}
+            {/* <div>
               <label className="text-black dark:text-gray-200">Image</label>
               <div className="flex justify-center px-6 pt-5 pb-6 mt-2 border-2 border-gray-300 border-dashed rounded-md">
                 <div className="space-y-1 text-center">
@@ -114,9 +142,11 @@ const Settings = () => {
                   <div className="flex items-center text-sm text-gray-600">
                     <label
                       htmlFor="file-upload"
-                      className="relative p-1 font-medium text-indigo-600 bg-white rounded-md cursor-pointer dark:bg-black dark:text-sky-500 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                      className="relative p-1 font-medium text-indigo-600 bg-white rounded-md cursor-pointer dark:bg-black dark:text-sky-500"
                     >
-                      <span className="">Upload a file</span>
+                      <span className="dark:hover:text-sky-400 hover:text-violet-400">
+                        Upload
+                      </span>
                       <input
                         id="file-upload"
                         name="file-upload"
@@ -124,13 +154,14 @@ const Settings = () => {
                         className="sr-only"
                       />
                     </label>
-                    <p className="pl-1 text-black">or drag and drop</p>
+                    <p className="ml-2 ">profile image here</p>
                   </div>
-                  <p className="text-xs text-black">PNG, JPG, GIF up to 10MB</p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
+
+          {/* Submit Button */}
           <div className="flex justify-end py-6">
             <button
               type="submit"

@@ -5,6 +5,7 @@ const Record = ({ records }: any) => {
     <main className="flex flex-col items-center justify-center w-full h-full">
       <div className="flex flex-grow w-full h-full">
         <section className="w-full px-4 py-12 sm:px-6 lg:px-4">
+          {/* Header */}
           <div className="text-center">
             <h2 className="text-base font-bold text-indigo-600 dark:text-white">
               This is where you can view the
@@ -41,6 +42,7 @@ const Record = ({ records }: any) => {
 
           <div className="w-full pb-6 overflow-x-auto rounded-lg">
             <table className="w-full">
+              {/* Table Columns */}
               <thead>
                 <tr className="tracking-wide text-left text-white uppercase bg-indigo-500 text-md dark:bg-slate-900 dark:text-sky-400">
                   <th className="px-4 py-3">
@@ -53,7 +55,9 @@ const Record = ({ records }: any) => {
                     <button className="text-xl font-semibold">Status</button>
                   </th>
                   <th className="px-4 py-3">
-                    <button className="text-xl font-semibold">Date</button>
+                    <button className="text-xl font-semibold">
+                      Date(DD/MM/YY)
+                    </button>
                   </th>
                 </tr>
               </thead>

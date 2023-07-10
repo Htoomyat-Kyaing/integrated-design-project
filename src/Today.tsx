@@ -1,5 +1,7 @@
+import { useState } from "react";
 import EmployeeStatus from "./EmployeeStatus";
 import { createClient } from "@supabase/supabase-js";
+import collect from "collect.js";
 
 const supabase = createClient(
   "https://cbmasaqglquxmvqcfixl.supabase.co",
@@ -7,25 +9,36 @@ const supabase = createClient(
 );
 
 const Today = ({ employees }: any) => {
-  const empAscending = [...employees].sort((a, b) => a.id - b.id);
-  const insertRecord = async(emp:any)=>{
+  // collect data
+  const collection = collect(employees);
+  // sort present function
+  const sortedPresent = () => {
+    return collection.sortByDesc("today");
+  };
+  // sort absent function
+  const sortedAbsent = () => {
+    return collection.sortBy("today");
+  };
+  const [sortedEmployees, setSortedEmployees] = useState(employees);
+
+  // save record uses this function
+  const insertRecord = async (emp: any) => {
     const { data, error } = await supabase
-    .from('records')
-    .insert([
-      { employee_id: emp.id, status: emp.today },
-    ])
-    .select()
-    if(data){
-      console.log(data)
-    }else{
-      console.log(error)
+      .from("records")
+      .insert([{ employee_id: emp.id, status: emp.today }])
+      .select();
+    if (data) {
+      console.log(data);
+    } else {
+      console.log(error);
     }
-    } 
-  
+  };
+
   return (
     <main className="flex items-center justify-center h-full">
       <div className="flex flex-grow w-full h-full">
         <section className="w-full px-4 py-12 sm:px-6 lg:px-4">
+          {/* Header */}
           <div className="text-center">
             <h2 className="text-base font-bold text-indigo-600 dark:text-white">
               This is where you can save the record of
@@ -35,41 +48,58 @@ const Today = ({ employees }: any) => {
             </h1>
           </div>
 
-          {/* Search Bar */}
           <div className="relative flex items-center justify-between gap-2 my-6">
-            <input
-              type="text"
-              name="search"
-              id="search"
-              className="px-2 py-1 bg-white border-2 rounded-md border-violet-400 dark:border-sky-400 focus:border-slate-700 focus:outline-none focus:ring-0 dark:text-white dark:bg-black dark:focus:border-slate-300 placeholder:text-sm contrast-more:placeholder-slate-500"
-              placeholder="Search Employee"
-            />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="absolute w-4 h-4 left-[183px] text-slate-400"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+            {/* Search Bar */}
+            <div className="relative flex items-center gap-2">
+              <input
+                type="text"
+                name="search"
+                id="search"
+                className="w-1/2 px-2 py-1 bg-white border-2 rounded-md sm:w-2/3 md:w-full border-violet-400 dark:border-sky-400 focus:border-slate-700 focus:outline-none focus:ring-0 dark:text-white dark:bg-black dark:focus:border-slate-300 placeholder:text-sm contrast-more:placeholder-slate-500"
+                placeholder={"Search Employee"}
               />
-            </svg>
+            </div>
 
-            <button className="px-6 py-2 font-semibold leading-5 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none dark:bg-sky-400 dark:hover:bg-sky-500 dark:text-black" onClick={()=>{
-              employees.forEach((emp:any)=>{
-                insertRecord(emp)
-              })
-            }}>
+            {/* Sorting */}
+            <div className="flex items-center gap-2 text-sm">
+              <p className="min-w-max">Sort by :</p>
+              <label className="cursor-pointer label">
+                <span className="">Present</span>
+                <input
+                  type="radio"
+                  value={"today"}
+                  name="radio-10"
+                  className="ml-1 border border-violet-600 dark:border-sky-400 radio checked:bg-violet-400 dark:checked:bg-sky-400"
+                  onChange={() => setSortedEmployees(sortedPresent())}
+                />
+              </label>
+              <label className="cursor-pointer label">
+                <span className="min-w-max">Absent</span>
+                <input
+                  type="radio"
+                  name="radio-10"
+                  value={""}
+                  className="ml-1 border border-violet-600 dark:border-sky-400 radio checked:bg-violet-400 dark:checked:bg-sky-400"
+                  onChange={() => setSortedEmployees(sortedAbsent())}
+                />
+              </label>
+            </div>
+
+            {/* Save Record */}
+            <button
+              className="px-6 py-2 font-semibold leading-5 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none dark:bg-sky-400 dark:hover:bg-sky-500 dark:text-black"
+              onClick={() => {
+                employees.forEach((emp: any) => {
+                  insertRecord(emp);
+                });
+              }}
+            >
               Save Record
             </button>
           </div>
 
           <div className="grid grid-cols-1 gap-6 pb-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
-            {empAscending.map((employee: any) => (
+            {sortedEmployees.map((employee: any) => (
               <EmployeeStatus key={employee.id} employee={employee} />
             ))}
           </div>
