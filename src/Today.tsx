@@ -1,6 +1,7 @@
 import EmployeeStatus from "./EmployeeStatus";
 
 const Today = ({ employees }: any) => {
+  const empAscending = [...employees].sort((a, b) => a.id - b.id);
   return (
     <main className="flex items-center justify-center h-full">
       <div className="flex flex-grow w-full h-full">
@@ -44,7 +45,7 @@ const Today = ({ employees }: any) => {
           </div>
 
           <div className="grid grid-cols-1 gap-6 pb-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
-            {employees.map((employee: any) => (
+            {empAscending.map((employee: any) => (
               <EmployeeStatus key={employee.id} employee={employee} />
             ))}
           </div>

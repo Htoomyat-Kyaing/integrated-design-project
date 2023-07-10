@@ -26,22 +26,21 @@ function App() {
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
+    const getEmployees = async () => {
+      let { data: employees }: any = await supabase
+        .from("employees")
+        .select("*");
+      setEmployees(employees);
+    };
+    const getRecords = async () => {
+      let { data: records }: any = await supabase
+        .from("records")
+        .select(`*,employees(*)`);
+      setRecords(records);
+    };
     getEmployees();
     getRecords();
   }, []);
-
-  async function getEmployees() {
-    let { data: employees }: any = await supabase.from("employees").select("*");
-    setEmployees(employees);
-  }
-
-  async function getRecords() {
-    let { data: records }: any = await supabase.from("records").select(`
-	*,
-	employees(*)
-`);
-    setRecords(records);
-  }
 
   return (
     <div className="flex h-screen">
