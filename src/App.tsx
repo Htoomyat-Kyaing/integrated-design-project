@@ -11,6 +11,8 @@ import Dashboard from "./Dashboard";
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import Records from "./Records";
+import AddEmployee from "./AddEmployee";
+import EditEmployee from "./EditEmployee";
 
 const supabase = createClient(
   "https://cbmasaqglquxmvqcfixl.supabase.co",
@@ -41,24 +43,25 @@ function App() {
     getEmployees();
     getRecords();
     // realtime subscribe
-    supabase.channel('custom-all-channel')
-  .on(
-    'postgres_changes',
-    { event: '*', schema: 'public', table: 'employees' },
-    (payload) => {
-      console.log('Change received!', payload)
-      getEmployees();
-    }
-  )
-  .on(
-    'postgres_changes',
-    { event: '*', schema: 'public', table: 'records' },
-    (payload) => {
-      console.log('Change received!', payload)
-      getRecords();
-    }
-  )
-  .subscribe()
+    supabase
+      .channel("custom-all-channel")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "employees" },
+        (payload) => {
+          console.log("Change received!", payload);
+          getEmployees();
+        }
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "records" },
+        (payload) => {
+          console.log("Change received!", payload);
+          getRecords();
+        }
+      )
+      .subscribe();
   }, []);
 
   return (
@@ -69,16 +72,20 @@ function App() {
           <Dashboard darkToggle={darkToggle} />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/today" element={<Today employees={employees} />} />
-            <Route path="/records" element={<Records records={records} />} />
+            <Route path="today" element={<Today employees={employees} />} />
+            <Route path="records" element={<Records records={records} />} />
             <Route
-              path="/employees"
+              path="employees"
               element={<Employees employees={employees} />}
             />
-            <Route path="/production" element={<Production />} />
-            <Route path="/analytics" element={<Analytics />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/help" element={<Help />} />
+            <Route path="production" element={<Production />} />
+            <Route path="analytics" element={<Analytics />} />
+            <Route path="settings" element={<Settings />}>
+              <Route index element={<AddEmployee />} />
+              <Route path="add" element={<AddEmployee />} />
+              <Route path="edit" element={<EditEmployee />} />
+            </Route>
+            <Route path="help" element={<Help />} />
           </Routes>
         </div>
       </BrowserRouter>
