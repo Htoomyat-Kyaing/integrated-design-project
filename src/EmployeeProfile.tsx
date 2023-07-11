@@ -2,7 +2,7 @@ import no_profile from "./assets/unknown_employee.png";
 
 const EmployeeProfile = ({ employee }: any) => {
   return (
-    <div className="flex flex-col items-center justify-center w-full p-12 bg-white rounded-lg shadow-lg dark:bg-black">
+    <div className="flex flex-col items-center justify-center w-full p-12 bg-white rounded-lg shadow-lg dark:bg-slate-900">
       {/* Profile Image */}
       <div className="flex items-center justify-center p-1 mb-8 rounded-full bg-gradient-to-b from-blue-400 to-violet-600 h-36 w-36">
         <img
