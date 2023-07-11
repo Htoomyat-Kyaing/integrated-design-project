@@ -154,7 +154,7 @@ const EditEmployee = () => {
         <div className="flex justify-end py-6">
           <button
             type="submit"
-            className="px-6 py-2 font-semibold leading-5 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none dark:bg-sky-400 dark:hover:bg-sky-500 dark:text-black"
+            className="px-6 py-2 font-semibold leading-5 text-white bg-yellow-500 rounded-md hover:bg-yellow-400 focus:outline-none dark:text-black"
           >
             Edit
           </button>
