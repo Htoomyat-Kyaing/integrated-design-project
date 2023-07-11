@@ -9,17 +9,28 @@ const supabase = createClient(
 );
 
 const Today = ({ employees }: any) => {
-  // collect data
-  const collection = collect(employees);
-  // sort present function
-  const sortedPresent = () => {
-    return collection.sortByDesc("today");
+  const [filteredEmployees, setFilteredEmployees] = useState(employees);
+
+  const handleSearch = (e: any) => {
+    const filteredPersons = employees.filter((person: any) => {
+      return (
+        person.first_name.toLowerCase().includes(e.toLowerCase()) ||
+        person.last_name.toLowerCase().includes(e.toLowerCase())
+      );
+    });
+    setFilteredEmployees(filteredPersons);
   };
-  // sort absent function
-  const sortedAbsent = () => {
-    return collection.sortBy("today");
+
+  const handleSort = (mode: any) => {
+    const collection = collect(employees);
+    if (mode === "present") {
+      const sorted = collection.sortByDesc("today");
+      setFilteredEmployees(sorted);
+    } else {
+      const sorted = collection.sortBy("today");
+      setFilteredEmployees(sorted);
+    }
   };
-  const [sortedEmployees, setSortedEmployees] = useState(employees);
 
   // save record uses this function
   const insertRecord = async (emp: any) => {
@@ -57,6 +68,7 @@ const Today = ({ employees }: any) => {
                 id="search"
                 className="w-1/2 px-2 py-1 bg-white border-2 rounded-md sm:w-2/3 md:w-full border-violet-400 dark:border-sky-400 focus:border-slate-700 focus:outline-none focus:ring-0 dark:text-white dark:bg-black dark:focus:border-slate-300 placeholder:text-sm contrast-more:placeholder-slate-500"
                 placeholder={"Search Employee"}
+                onChange={(e) => handleSearch(e.target.value)}
               />
             </div>
 
@@ -67,10 +79,10 @@ const Today = ({ employees }: any) => {
                 <span className="">Present</span>
                 <input
                   type="radio"
-                  value={"today"}
+                  value={"present"}
                   name="radio-10"
                   className="ml-1 border border-violet-600 dark:border-sky-400 radio checked:bg-violet-400 dark:checked:bg-sky-400"
-                  onChange={() => setSortedEmployees(sortedPresent())}
+                  onChange={(e) => handleSort(e.target.value)}
                 />
               </label>
               <label className="cursor-pointer label">
@@ -78,9 +90,9 @@ const Today = ({ employees }: any) => {
                 <input
                   type="radio"
                   name="radio-10"
-                  value={""}
+                  value={"absent"}
                   className="ml-1 border border-violet-600 dark:border-sky-400 radio checked:bg-violet-400 dark:checked:bg-sky-400"
-                  onChange={() => setSortedEmployees(sortedAbsent())}
+                  onChange={(e) => handleSort(e.target.value)}
                 />
               </label>
             </div>
@@ -99,7 +111,7 @@ const Today = ({ employees }: any) => {
           </div>
 
           <div className="grid grid-cols-1 gap-6 pb-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
-            {sortedEmployees.map((employee: any) => (
+            {filteredEmployees.map((employee: any) => (
               <EmployeeStatus key={employee.id} employee={employee} />
             ))}
           </div>

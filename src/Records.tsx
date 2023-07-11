@@ -1,6 +1,22 @@
+import { useState } from "react";
 import RecordRow from "./RecordRow";
+import { format } from "date-fns";
 
 const Record = ({ records }: any) => {
+  const [filteredRecords, setFilteredRecords] = useState(records);
+
+  const handleSearch = (e: any) => {
+    const filteredRows = records.filter((record: any) => {
+      const date = format(new Date(record.created_at), "Pp");
+      return (
+        record.employees.first_name.toLowerCase().includes(e.toLowerCase()) ||
+        record.employees.last_name.toLowerCase().includes(e.toLowerCase()) ||
+        String(date).match(String(e))
+      );
+    });
+    setFilteredRecords(filteredRows);
+  };
+
   return (
     <main className="flex flex-col items-center justify-center w-full h-full">
       <div className="flex flex-grow w-full h-full">
@@ -23,6 +39,7 @@ const Record = ({ records }: any) => {
               id="search"
               className="px-2 py-1 bg-white border-2 rounded-md border-violet-400 dark:border-sky-400 focus:border-slate-700 focus:outline-none focus:ring-0 dark:text-white dark:bg-black dark:focus:border-slate-300 placeholder:text-sm contrast-more:placeholder-slate-500"
               placeholder="Search Records"
+              onChange={(e) => handleSearch(e.target.value)}
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +61,7 @@ const Record = ({ records }: any) => {
             <table className="w-full">
               {/* Table Columns */}
               <thead>
-                <tr className="tracking-wide text-left text-white uppercase bg-indigo-500 text-md dark:bg-slate-900 dark:text-sky-400">
+                <tr className="tracking-wide text-left text-white uppercase bg-indigo-500 text-md dark:bg-slate-950 dark:text-sky-400">
                   <th className="px-4 py-3">
                     <button className="text-xl font-semibold">Name</button>
                   </th>
@@ -62,8 +79,8 @@ const Record = ({ records }: any) => {
                 </tr>
               </thead>
 
-              <tbody className="bg-white dark:bg-black">
-                {records.map((record: any) => (
+              <tbody className="bg-white dark:bg-slate-900">
+                {filteredRecords.map((record: any) => (
                   <RecordRow key={record.id} record={record} />
                 ))}
               </tbody>
