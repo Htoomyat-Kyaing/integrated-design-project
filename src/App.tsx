@@ -7,13 +7,13 @@ import Production from "./Production";
 import Analytics from "./Analytics";
 import Settings from "./Settings";
 import Help from "./Help";
-import Dashboard from "./Dashboard";
+import Dashboard from "./components/Dashboard";
 import { useEffect, useState } from "react";
 import { supabase } from "./supabase/supabaseClient";
 import Records from "./Records";
-import AddEmployee from "./AddEmployee";
-import EditEmployee from "./EditEmployee";
-import DeleteEmployee from "./DeleteEmployee";
+import AddEmployee from "./components/AddEmployee";
+import EditEmployee from "./components/EditEmployee";
+import DeleteEmployee from "./components/DeleteEmployee";
 
 function App() {
   const darkToggle = (e: boolean) => {

@@ -1,4 +1,4 @@
-import no_profile from "./assets/unknown_employee.png";
+import no_profile from "../assets/unknown_employee.png";
 import { format } from "date-fns";
 
 const RecordRow = ({ record }: any) => {

@@ -1,4 +1,4 @@
-import no_profile from "./assets/unknown_employee.png";
+import no_profile from "../assets/unknown_employee.png";
 
 const EmployeeStatus = ({ employee }: any) => {
   return (

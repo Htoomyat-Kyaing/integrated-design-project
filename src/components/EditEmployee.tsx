@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import collect from "collect.js";
-import { supabase } from "./supabase/supabaseClient";
+import { supabase } from "../supabase/supabaseClient";
 
 const EditEmployee = ({ employees }: any) => {
   const collection = collect(employees);

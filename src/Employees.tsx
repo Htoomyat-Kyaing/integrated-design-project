@@ -1,5 +1,5 @@
 import collect from "collect.js";
-import EmployeeProfile from "./EmployeeProfile";
+import EmployeeProfile from "./components/EmployeeProfile";
 import { useState } from "react";
 
 const Employees = ({ employees }: any) => {
@@ -37,14 +37,14 @@ const Employees = ({ employees }: any) => {
             </h1>
           </div>
 
-          <div className="flex items-center justify-between my-6">
+          <div className="flex flex-col items-center justify-between gap-2 my-6">
             {/* Search Bar */}
             <div className="relative flex items-center gap-2">
               <input
                 type="text"
                 name="search"
                 id="search"
-                className="w-1/2 px-2 py-1 bg-white border-2 rounded-md sm:w-2/3 md:w-full border-violet-400 dark:border-sky-400 focus:border-slate-700 focus:outline-none focus:ring-0 dark:text-white dark:bg-black dark:focus:border-slate-300 placeholder:text-sm contrast-more:placeholder-slate-500"
+                className="px-2 py-1 bg-white border-2 rounded-md sm:w-2/3 md:w-full border-violet-400 dark:border-sky-400 focus:border-slate-700 focus:outline-none focus:ring-0 dark:text-white dark:bg-black dark:focus:border-slate-300 placeholder:text-sm contrast-more:placeholder-slate-500"
                 placeholder={"Search Employee"}
                 onChange={(e) => handleSearch(e.target.value)}
               />

@@ -1,12 +1,7 @@
 import { useState } from "react";
-import EmployeeStatus from "./EmployeeStatus";
-import { createClient } from "@supabase/supabase-js";
+import EmployeeStatus from "./components/EmployeeStatus";
 import collect from "collect.js";
-
-const supabase = createClient(
-  "https://cbmasaqglquxmvqcfixl.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNibWFzYXFnbHF1eG12cWNmaXhsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODgzNjY4OTgsImV4cCI6MjAwMzk0Mjg5OH0.pO0-_dEwjZeViEsPABf0l1M1wjXDgENB1XsmYcVULXg"
-);
+import { supabase } from "./supabase/supabaseClient";
 
 const Today = ({ employees }: any) => {
   const [filteredEmployees, setFilteredEmployees] = useState(employees);
@@ -59,14 +54,14 @@ const Today = ({ employees }: any) => {
             </h1>
           </div>
 
-          <div className="relative flex items-center justify-between gap-2 my-6">
+          <div className="relative flex flex-col items-center justify-between gap-2 my-6">
             {/* Search Bar */}
             <div className="relative flex items-center gap-2">
               <input
                 type="text"
                 name="search"
                 id="search"
-                className="w-1/2 px-2 py-1 bg-white border-2 rounded-md sm:w-2/3 md:w-full border-violet-400 dark:border-sky-400 focus:border-slate-700 focus:outline-none focus:ring-0 dark:text-white dark:bg-black dark:focus:border-slate-300 placeholder:text-sm contrast-more:placeholder-slate-500"
+                className="px-2 py-1 bg-white border-2 rounded-md  sm:w-2/3 md:w-full border-violet-400 dark:border-sky-400 focus:border-slate-700 focus:outline-none focus:ring-0 dark:text-white dark:bg-black dark:focus:border-slate-300 placeholder:text-sm contrast-more:placeholder-slate-500"
                 placeholder={"Search Employee"}
                 onChange={(e) => handleSearch(e.target.value)}
               />

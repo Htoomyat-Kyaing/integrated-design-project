@@ -1,5 +1,5 @@
 import { useState } from "react";
-import RecordRow from "./RecordRow";
+import RecordRow from "./components/RecordRow";
 import { format } from "date-fns";
 
 const Record = ({ records }: any) => {

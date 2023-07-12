@@ -7,7 +7,7 @@ import icon_production from "./assets/factory.png";
 import icon_analytics from "./assets/hand.png";
 import icon_settings from "./assets/gears.png";
 import icon_help from "./assets/question_mark.png";
-import NavBtn from "./NavBtn";
+import NavBtn from "./components/NavBtn";
 
 const Nav = () => {
   return (
