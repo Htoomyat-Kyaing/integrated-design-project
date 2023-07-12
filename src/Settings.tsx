@@ -15,6 +15,11 @@ const Settings = () => {
               Edit
             </div>
           </Link>
+          <Link to="delete">
+            <div className="p-2 text-xl font-bold text-white capitalize bg-red-500 hover:bg-red-400 rounded-xl dark:text-black min-w-max">
+              Delete
+            </div>
+          </Link>
         </nav>
 
         {/* Add, Edit and Delete */}

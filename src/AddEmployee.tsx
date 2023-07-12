@@ -1,9 +1,5 @@
 import { useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-const supabase = createClient(
-  "https://cbmasaqglquxmvqcfixl.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNibWFzYXFnbHF1eG12cWNmaXhsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODgzNjY4OTgsImV4cCI6MjAwMzk0Mjg5OH0.pO0-_dEwjZeViEsPABf0l1M1wjXDgENB1XsmYcVULXg"
-);
+import { supabase } from "./supabase/supabaseClient";
 
 const AddEmployee = () => {
   const [firstName, setFirstName] = useState("");

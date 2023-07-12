@@ -9,15 +9,11 @@ import Settings from "./Settings";
 import Help from "./Help";
 import Dashboard from "./Dashboard";
 import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "./supabase/supabaseClient";
 import Records from "./Records";
 import AddEmployee from "./AddEmployee";
 import EditEmployee from "./EditEmployee";
-
-const supabase = createClient(
-  "https://cbmasaqglquxmvqcfixl.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNibWFzYXFnbHF1eG12cWNmaXhsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODgzNjY4OTgsImV4cCI6MjAwMzk0Mjg5OH0.pO0-_dEwjZeViEsPABf0l1M1wjXDgENB1XsmYcVULXg"
-);
+import DeleteEmployee from "./DeleteEmployee";
 
 function App() {
   const darkToggle = (e: boolean) => {
@@ -49,7 +45,7 @@ function App() {
         "postgres_changes",
         { event: "*", schema: "public", table: "employees" },
         (payload) => {
-          console.log("Change received!", payload);
+          console.log(payload.eventType);
           getEmployees();
         }
       )
@@ -57,7 +53,7 @@ function App() {
         "postgres_changes",
         { event: "*", schema: "public", table: "records" },
         (payload) => {
-          console.log("Change received!", payload);
+          console.log(payload.eventType);
           getRecords();
         }
       )
@@ -83,7 +79,14 @@ function App() {
             <Route path="settings" element={<Settings />}>
               <Route index element={<AddEmployee />} />
               <Route path="add" element={<AddEmployee />} />
-              <Route path="edit" element={<EditEmployee />} />
+              <Route
+                path="edit"
+                element={<EditEmployee employees={employees} />}
+              />
+              <Route
+                path="delete"
+                element={<DeleteEmployee employees={employees} />}
+              />
             </Route>
             <Route path="help" element={<Help />} />
           </Routes>
