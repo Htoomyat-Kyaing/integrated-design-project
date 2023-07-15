@@ -1,6 +1,6 @@
-# Employee Management System (Integrated Project)
+# Employee Management System (Integrated Design Project)
 
-This is a web application that I developed as an assignment project during my 5th year, 2nd semester of university. It is built with,
+This is a web application that I developed as an integrated design project during my 5th year, 2nd semester of university. It is built with,
 
 - React with Vite (Typescript), Tailwind CSS for frontend
 
