@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
-    <main className="flex items-center justify-center h-full overflow-hidden">
+    <main className="flex items-center justify-center w-full h-full overflow-hidden">
       <section className="dark:bg-gray-800 dark:text-gray-100">
-        <div className="container flex flex-col items-center px-4 py-16 mx-auto text-center md:py-32 md:px-10 lg:px-32 xl:max-w-3xl">
+        <div className="flex flex-col items-center w-full px-4 py-16 text-center md:py-32 md:px-10 lg:px-32">
           <h1 className="text-4xl font-bold leadi sm:text-5xl">
             Efficiently
             <span className="text-indigo-600 dark:text-sky-400"> manage </span>

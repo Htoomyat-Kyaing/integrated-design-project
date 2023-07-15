@@ -14,6 +14,8 @@ import Records from "./Records";
 import AddEmployee from "./components/AddEmployee";
 import EditEmployee from "./components/EditEmployee";
 import DeleteEmployee from "./components/DeleteEmployee";
+import { Auth } from "@supabase/auth-ui-react";
+import { ThemeSupa } from "@supabase/auth-ui-shared";
 
 function App() {
   const darkToggle = (e: boolean) => {
@@ -22,6 +24,7 @@ function App() {
   };
   const [employees, setEmployees] = useState([]);
   const [records, setRecords] = useState([]);
+  const [session, setSession] = useState(null);
 
   useEffect(() => {
     const getEmployees = async () => {
@@ -58,39 +61,62 @@ function App() {
         }
       )
       .subscribe();
+
+    supabase.auth.getSession().then(({ data: { session } }: any) => {
+      setSession(session);
+    });
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session: any) => {
+      setSession(session);
+    });
+    return () => subscription.unsubscribe();
   }, []);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex w-screen h-screen">
       <BrowserRouter>
-        <Nav />
-        <div className="flex flex-col w-full h-full overflow-auto text-black dark:text-white bg-slate-200 dark:bg-slate-800">
-          <Dashboard darkToggle={darkToggle} />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="today" element={<Today employees={employees} />} />
-            <Route path="records" element={<Records records={records} />} />
-            <Route
-              path="employees"
-              element={<Employees employees={employees} />}
+        {session !== null ? (
+          <>
+            <Nav />
+            <div className="flex flex-col w-full h-full overflow-auto text-black dark:text-white bg-slate-200 dark:bg-slate-800">
+              <Dashboard darkToggle={darkToggle} />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="today" element={<Today employees={employees} />} />
+                <Route path="records" element={<Records records={records} />} />
+                <Route
+                  path="employees"
+                  element={<Employees employees={employees} />}
+                />
+                <Route path="production" element={<Production />} />
+                <Route path="analytics" element={<Analytics />} />
+                <Route path="settings" element={<Settings />}>
+                  <Route index element={<AddEmployee />} />
+                  <Route path="add" element={<AddEmployee />} />
+                  <Route
+                    path="edit"
+                    element={<EditEmployee employees={employees} />}
+                  />
+                  <Route
+                    path="delete"
+                    element={<DeleteEmployee employees={employees} />}
+                  />
+                </Route>
+                <Route path="help" element={<Help />} />
+              </Routes>
+            </div>
+          </>
+        ) : (
+          <div className="flex items-center justify-center w-full h-full">
+            <Auth
+              providers={[]}
+              supabaseClient={supabase}
+              appearance={{ theme: ThemeSupa }}
+              theme={localStorage.getItem("theme") || "dark"}
             />
-            <Route path="production" element={<Production />} />
-            <Route path="analytics" element={<Analytics />} />
-            <Route path="settings" element={<Settings />}>
-              <Route index element={<AddEmployee />} />
-              <Route path="add" element={<AddEmployee />} />
-              <Route
-                path="edit"
-                element={<EditEmployee employees={employees} />}
-              />
-              <Route
-                path="delete"
-                element={<DeleteEmployee employees={employees} />}
-              />
-            </Route>
-            <Route path="help" element={<Help />} />
-          </Routes>
-        </div>
+          </div>
+        )}
       </BrowserRouter>
     </div>
   );
