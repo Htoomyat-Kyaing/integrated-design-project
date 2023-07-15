@@ -8,7 +8,7 @@ This is a web application that I developed as an assignment project during my 5t
 
 - Supabase for backend and user authentication.
  
-It provides a user-friendly interface for managing employees and related information. Currently, it is being deployed on Netlify. You can check it [here](https://integrated-design-project.netlify.app/)!
+It provides a user-friendly interface for managing employees and related information. Currently, it is being deployed on Netlify. You can check it here! -  [https://integrated-design-project.netlify.app](https://integrated-design-project.netlify.app/)
 
 ## Features
 
@@ -103,4 +103,4 @@ I would like to acknowledge the following projects and their respective authors 
 - [Netlify](https://www.netlify.com/) - A powerful platform for deploying and managing web applications.
 - Frontend UI design - The UI design of this website is not my own creation, and heavily inspired by these [(referenced designs)](https://github.com/Htoomyat-Kyaing/integrated-design-project/tree/main/public/ui%20reference) from [Dribble](https://dribbble.com/tags/employee%20management%20system). All credits to them.
 
-I express my gratitude to the creators of these libraries and platforms for their excellent work and their contribution to this project.
+I express my gratitude to the creators of these libraries and platforms for their excellent work and their contribution to [this project](#employee-management-system-integrated-project).
