@@ -11,6 +11,7 @@ const EditEmployee = ({ employees }: any) => {
   const [id, setId] = useState();
   const [age, setAge] = useState();
   const [position, setPosition] = useState("");
+  const [today, setToday] = useState(false);
 
   // Edit Form onSubmit function
   const editEmployee = async ({
@@ -19,6 +20,7 @@ const EditEmployee = ({ employees }: any) => {
     lastName,
     age,
     position,
+    today,
   }: any) => {
     const { data, error } = await supabase
       .from("employees")
@@ -28,7 +30,7 @@ const EditEmployee = ({ employees }: any) => {
           last_name: lastName,
           age: age,
           position: position,
-          today: false,
+          today: today,
         },
       ])
       .eq("id", id)
@@ -56,7 +58,7 @@ const EditEmployee = ({ employees }: any) => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          editEmployee({ id, firstName, lastName, age, position });
+          editEmployee({ id, firstName, lastName, age, position, today });
         }}
       >
         <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
@@ -88,7 +90,6 @@ const EditEmployee = ({ employees }: any) => {
               onChange={(e: any) => {
                 setFirstName(e.target.value);
               }}
-              required
             />
           </div>
           {/* Last Name */}
@@ -100,7 +101,6 @@ const EditEmployee = ({ employees }: any) => {
               onChange={(e: any) => {
                 setLastName(e.target.value);
               }}
-              required
             />
           </div>
           {/* Age */}
@@ -112,7 +112,6 @@ const EditEmployee = ({ employees }: any) => {
               onChange={(e: any) => {
                 setAge(e.target.value);
               }}
-              required
             />
           </div>
           {/* Position */}
@@ -125,6 +124,21 @@ const EditEmployee = ({ employees }: any) => {
                 setPosition(e.target.value);
               }}
             />
+          </div>
+
+          {/* Today */}
+          <div>
+            <label className="text-black dark:text-gray-200">Today</label>
+            <select
+              className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+              onChange={(e: any) => {
+                if (e.target.value === "present") setToday(true);
+                else setToday(false);
+              }}
+            >
+              <option value={"absent"}>ABSENT</option>
+              <option value={"present"}>PRESENT</option>
+            </select>
           </div>
 
           {/* // TODO: implement later */}

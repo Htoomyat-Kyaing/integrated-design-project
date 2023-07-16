@@ -7,6 +7,7 @@ const AddEmployee = () => {
   const [id, setId] = useState();
   const [age, setAge] = useState();
   const [position, setPosition] = useState("");
+  const [today, setToday] = useState(false);
 
   // Add Form onSubmit function
   const insertEmployee = async ({
@@ -15,6 +16,7 @@ const AddEmployee = () => {
     lastName,
     age,
     position,
+    today,
   }: any) => {
     const { data, error } = await supabase
       .from("employees")
@@ -25,7 +27,7 @@ const AddEmployee = () => {
           last_name: lastName,
           age: age,
           position: position,
-          today: false,
+          today: today,
         },
       ])
       .select();
@@ -35,12 +37,13 @@ const AddEmployee = () => {
       console.log(error);
     }
   };
+
   return (
     <>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          insertEmployee({ id, firstName, lastName, age, position });
+          insertEmployee({ id, firstName, lastName, age, position, today });
         }}
       >
         <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
@@ -56,6 +59,7 @@ const AddEmployee = () => {
               required
             />
           </div>
+
           {/* First Name */}
           <div>
             <label className="text-black dark:text-gray-200">First Name</label>
@@ -68,6 +72,7 @@ const AddEmployee = () => {
               required
             />
           </div>
+
           {/* Last Name */}
           <div>
             <label className="text-black dark:text-gray-200">Last Name</label>
@@ -80,6 +85,7 @@ const AddEmployee = () => {
               required
             />
           </div>
+
           {/* Age */}
           <div>
             <label className="text-black dark:text-gray-200">Age</label>
@@ -92,6 +98,7 @@ const AddEmployee = () => {
               required
             />
           </div>
+
           {/* Position */}
           <div>
             <label className="text-black dark:text-gray-200">Position</label>
@@ -102,6 +109,22 @@ const AddEmployee = () => {
                 setPosition(e.target.value);
               }}
             />
+          </div>
+
+          {/* Today */}
+          <div>
+            <label className="text-black dark:text-gray-200">Today</label>
+            <select
+              className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+              onChange={(e: any) => {
+                if (e.target.value === "present") setToday(true);
+                else setToday(false);
+              }}
+              required
+            >
+              <option value={"absent"}>ABSENT</option>
+              <option value={"present"}>PRESENT</option>
+            </select>
           </div>
 
           {/* // TODO: implement later */}
