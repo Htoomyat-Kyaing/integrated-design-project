@@ -16,6 +16,7 @@ import EditEmployee from "./components/EditEmployee";
 import DeleteEmployee from "./components/DeleteEmployee";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
+import Alert from "./Alert";
 
 function App() {
   const darkToggle = (e: boolean) => {
@@ -25,6 +26,14 @@ function App() {
   const [employees, setEmployees] = useState([]);
   const [records, setRecords] = useState([]);
   const [session, setSession] = useState(null);
+  const [eventType, setEventType] = useState("");
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setEventType("");
+    }, 3000);
+    return () => clearTimeout(timeout);
+  }, [eventType]);
 
   useEffect(() => {
     const getEmployees = async () => {
@@ -49,6 +58,7 @@ function App() {
         { event: "*", schema: "public", table: "employees" },
         (payload) => {
           console.log(payload.eventType);
+          setEventType(String(payload.eventType));
           getEmployees();
         }
       )
@@ -57,6 +67,7 @@ function App() {
         { event: "*", schema: "public", table: "records" },
         (payload) => {
           console.log(payload.eventType);
+          setEventType(String(payload.eventType));
           getRecords();
         }
       )
@@ -70,7 +81,9 @@ function App() {
     } = supabase.auth.onAuthStateChange((_event, session: any) => {
       setSession(session);
     });
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   return (
@@ -79,7 +92,7 @@ function App() {
         {session !== null ? (
           <>
             <Nav />
-            <div className="flex flex-col w-full h-full overflow-auto text-black dark:text-white bg-slate-200 dark:bg-slate-800">
+            <div className="relative flex flex-col w-full h-full overflow-auto text-black dark:text-white bg-slate-200 dark:bg-slate-800">
               <Dashboard darkToggle={darkToggle} />
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -105,6 +118,12 @@ function App() {
                 </Route>
                 <Route path="help" element={<Help />} />
               </Routes>
+              {/* <select onChange={(e) => setEventType(e.target.value)}>
+                <option value="INSERT">INSERT</option>
+                <option value="UPDATE">UPDATE</option>
+                <option value="DELETE">DELETE</option>
+              </select> */}
+              <Alert eventType={eventType} />
             </div>
           </>
         ) : (
