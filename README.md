@@ -1,4 +1,4 @@
-# Employee Management System (Integrated Design Project)
+# <a name="employee-management-system-integrated-project">Employee Management System (Integrated Design Project)
 
 This is a web application that I developed as an integrated design project during my 5th year, 2nd semester of university. It is built with,
 
@@ -83,7 +83,7 @@ Contributions are welcome! If you'd like to contribute to this project, please f
 
 &copy; 2023 [Htoo Myat Kyaing](https://github.com/Htoomyat-Kyaing). All rights reserved.
 
-Unauthorized copying, reproduction, or any other use of this software, including any modification, distribution, or publication, without the express prior written permission of the copyright holder is strictly prohibited.
+Unauthorized copying, reproduction, or any other use, including any distribution, or publication, without the express prior written permission of the copyright holder is strictly prohibited.
 
 This project is for educational and personal use only. Any commercial use or deployment without proper authorization is not allowed.
 
