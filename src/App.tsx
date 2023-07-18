@@ -17,15 +17,15 @@ import DeleteEmployee from "./components/DeleteEmployee";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import Alert from "./Alert";
+import { useEmployeeStore } from "./context/employeeStore";
+import { useRecordStore } from "./context/recordStore";
+import { useSessionStore } from "./context/sessionStore";
+import { AuthChangeEvent, Session } from "@supabase/supabase-js";
 
 function App() {
-  const darkToggle = (e: boolean) => {
-    if (e) document.documentElement.classList.add("dark");
-    else document.documentElement.classList.remove("dark");
-  };
-  const [employees, setEmployees] = useState([]);
-  const [records, setRecords] = useState([]);
-  const [session, setSession] = useState(null);
+  const { employees, getEmployees } = useEmployeeStore();
+  const { records, getRecords } = useRecordStore();
+  const { session, setSession } = useSessionStore();
   const [eventType, setEventType] = useState("");
 
   useEffect(() => {
@@ -36,18 +36,7 @@ function App() {
   }, [eventType]);
 
   useEffect(() => {
-    const getEmployees = async () => {
-      let { data: employees }: any = await supabase
-        .from("employees")
-        .select("*");
-      setEmployees(employees);
-    };
-    const getRecords = async () => {
-      let { data: records }: any = await supabase
-        .from("records")
-        .select(`*,employees(*)`);
-      setRecords(records);
-    };
+    // fetch data
     getEmployees();
     getRecords();
     // realtime subscribe
@@ -78,9 +67,11 @@ function App() {
     });
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session: any) => {
-      setSession(session);
-    });
+    } = supabase.auth.onAuthStateChange(
+      (_event: AuthChangeEvent, session: Session | null) => {
+        setSession(session);
+      }
+    );
     return () => {
       subscription.unsubscribe();
     };
@@ -93,7 +84,7 @@ function App() {
           <>
             <Nav />
             <div className="relative flex flex-col w-full h-full overflow-auto text-black dark:text-white bg-slate-200 dark:bg-slate-800">
-              <Dashboard darkToggle={darkToggle} />
+              <Dashboard />
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="today" element={<Today employees={employees} />} />

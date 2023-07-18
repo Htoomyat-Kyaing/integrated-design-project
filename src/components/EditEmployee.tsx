@@ -24,7 +24,7 @@ const EditEmployee = ({ employees }: any) => {
   }: any) => {
     const { data, error } = await supabase
       .from("employees")
-      .update([
+      .upsert([
         {
           first_name: firstName,
           last_name: lastName,
