@@ -17,9 +17,10 @@ import { useEffect, useState } from "react";
 import { supabase } from "./supabase/supabaseClient";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { Auth } from "@supabase/auth-ui-react";
-import { useEmployeeStore } from "./context/EmployeeContext";
-import { useRecordStore } from "./context/RecordContext";
-import { useSessionStore } from "./context/SessionContext";
+import { useEmployeeStore } from "./context/employeeStore";
+import { useRecordStore } from "./context/recordStore";
+import { useSessionStore } from "./context/sessionStore";
+import { AuthChangeEvent, Session } from "@supabase/supabase-js";
 
 function App() {
   const { employees, getEmployees } = useEmployeeStore();
@@ -30,6 +31,7 @@ function App() {
   useEffect(() => {
     document.documentElement.classList.add("dark");
 
+    // fetch data
     getEmployees();
     getRecords();
 
@@ -59,9 +61,11 @@ function App() {
     // watching session change
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session: any) => {
-      setSession(session);
-    });
+    } = supabase.auth.onAuthStateChange(
+      (_event: AuthChangeEvent, session: Session | null) => {
+        setSession(session);
+      }
+    );
     return () => {
       subscription.unsubscribe();
     };

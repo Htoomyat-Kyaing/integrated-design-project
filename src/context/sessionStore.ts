@@ -3,10 +3,10 @@ import { Session } from "@supabase/supabase-js";
 
 interface SessionStore {
   session?: Session | null;
-  setSession: (session: Session) => void;
+  setSession: (session: Session|null) => void;
 }
 
 export const useSessionStore = create<SessionStore>((set) => ({
   session: null,
-  setSession: (session: Session) => set({ session }),
+  setSession: (session: Session|null) => set({ session }),
 }));
