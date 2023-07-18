@@ -1,6 +1,6 @@
 import { supabase } from "../supabase/supabaseClient";
 
-const Dashboard = ({ darkToggle }: any) => {
+const Dashboard = () => {
   async function signOut() {
     const { error } = await supabase.auth.signOut();
     console.log(error);
@@ -8,13 +8,17 @@ const Dashboard = ({ darkToggle }: any) => {
 
   return (
     <div className="sticky top-0 z-10 flex items-center justify-between w-full p-3 sm:p-4 md:p-5 lg:p-6 min-h-max bg-slate-600 dark:bg-slate-900">
+      {/* Dark Mode */}
       <label className="swap swap-rotate">
         {/* this hidden checkbox controls the state */}
         <input
           type="checkbox"
           id="test"
+          defaultChecked
           onChange={(e) => {
-            darkToggle(e.target.checked);
+            if (e.target.checked)
+              document.documentElement.classList.add("dark");
+            else document.documentElement.classList.remove("dark");
           }}
         />
 
@@ -37,6 +41,7 @@ const Dashboard = ({ darkToggle }: any) => {
         </svg>
       </label>
 
+      {/* Sign Out */}
       <div className="flex items-center gap-2">
         <label
           htmlFor="signout"
