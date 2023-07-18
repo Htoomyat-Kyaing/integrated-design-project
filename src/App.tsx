@@ -1,56 +1,39 @@
 import Nav from "./Nav";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Today from "./Today";
-import Employees from "./Employees";
+import Dashboard from "./components/Dashboard";
 import Home from "./Home";
+import Today from "./Today";
+import Records from "./Records";
+import Employees from "./Employees";
 import Production from "./Production";
 import Analytics from "./Analytics";
 import Settings from "./Settings";
 import Help from "./Help";
-import Dashboard from "./components/Dashboard";
-import { useEffect, useState } from "react";
-import { supabase } from "./supabase/supabaseClient";
-import Records from "./Records";
+import Alert from "./Alert";
 import AddEmployee from "./components/AddEmployee";
 import EditEmployee from "./components/EditEmployee";
 import DeleteEmployee from "./components/DeleteEmployee";
-import { Auth } from "@supabase/auth-ui-react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { supabase } from "./supabase/supabaseClient";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import Alert from "./Alert";
+import { Auth } from "@supabase/auth-ui-react";
+import { useEmployeeStore } from "./context/EmployeeContext";
+import { useRecordStore } from "./context/RecordContext";
+import { useSessionStore } from "./context/SessionContext";
 
 function App() {
-  const darkToggle = (e: boolean) => {
-    if (e) document.documentElement.classList.add("dark");
-    else document.documentElement.classList.remove("dark");
-  };
-  const [employees, setEmployees] = useState([]);
-  const [records, setRecords] = useState([]);
-  const [session, setSession] = useState(null);
+  const { employees, getEmployees } = useEmployeeStore();
+  const { records, getRecords } = useRecordStore();
+  const { session, setSession } = useSessionStore();
   const [eventType, setEventType] = useState("");
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setEventType("");
-    }, 3000);
-    return () => clearTimeout(timeout);
-  }, [eventType]);
+    document.documentElement.classList.add("dark");
 
-  useEffect(() => {
-    const getEmployees = async () => {
-      let { data: employees }: any = await supabase
-        .from("employees")
-        .select("*");
-      setEmployees(employees);
-    };
-    const getRecords = async () => {
-      let { data: records }: any = await supabase
-        .from("records")
-        .select(`*,employees(*)`);
-      setRecords(records);
-    };
     getEmployees();
     getRecords();
-    // realtime subscribe
+
+    // subscribing real time changes in both tables
     supabase
       .channel("custom-all-channel")
       .on(
@@ -73,9 +56,7 @@ function App() {
       )
       .subscribe();
 
-    supabase.auth.getSession().then(({ data: { session } }: any) => {
-      setSession(session);
-    });
+    // watching session change
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session: any) => {
@@ -86,6 +67,13 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setEventType("");
+    }, 3000);
+    return () => clearTimeout(timeout);
+  }, [eventType]);
+
   return (
     <div className="flex w-screen h-screen">
       <BrowserRouter>
@@ -93,7 +81,8 @@ function App() {
           <>
             <Nav />
             <div className="relative flex flex-col w-full h-full overflow-auto text-black dark:text-white bg-slate-200 dark:bg-slate-800">
-              <Dashboard darkToggle={darkToggle} />
+              <Dashboard />
+
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="today" element={<Today employees={employees} />} />
@@ -118,15 +107,13 @@ function App() {
                 </Route>
                 <Route path="help" element={<Help />} />
               </Routes>
-              {/* <select onChange={(e) => setEventType(e.target.value)}>
-                <option value="INSERT">INSERT</option>
-                <option value="UPDATE">UPDATE</option>
-                <option value="DELETE">DELETE</option>
-              </select> */}
+
+              {/* Notification for table changes */}
               <Alert eventType={eventType} />
             </div>
           </>
         ) : (
+          // Supabase Auth
           <div className="flex items-center justify-center w-full h-full">
             <Auth
               providers={[]}
