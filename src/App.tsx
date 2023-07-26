@@ -118,11 +118,6 @@ function App() {
                 </Route>
                 <Route path="help" element={<Help />} />
               </Routes>
-              {/* <select onChange={(e) => setEventType(e.target.value)}>
-                <option value="INSERT">INSERT</option>
-                <option value="UPDATE">UPDATE</option>
-                <option value="DELETE">DELETE</option>
-              </select> */}
               <Alert eventType={eventType} />
             </div>
           </>

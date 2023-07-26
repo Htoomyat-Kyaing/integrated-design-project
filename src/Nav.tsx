@@ -12,7 +12,6 @@ import NavBtn from "./components/NavBtn";
 const Nav = () => {
   return (
     <nav className="flex flex-col justify-between h-full px-3 text-white md:px-6 min-w-max bg-gradient-to-b from-blue-400 to-violet-600">
-      {/* need to change to navbtn component */}
       <div className="flex flex-col items-center h-screen">
         <Link to={`/`}>
           <img src={logo} alt="logo.png" className="w-12 h-12 my-6" />

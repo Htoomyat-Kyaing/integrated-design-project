@@ -22,41 +22,11 @@ const Alert = ({ eventType }: any) => {
 
   switch (eventType) {
     case "INSERT":
-      return (
-        <>
-          {isAlertVisible && (
-            <>
-              <InsertAlert />
-              {/* <UpdateAlert /> */}
-              {/* <DeleteAlert /> */}
-            </>
-          )}
-        </>
-      );
+      return <>{isAlertVisible && <InsertAlert />}</>;
     case "UPDATE":
-      return (
-        <>
-          {isAlertVisible && (
-            <>
-              {/* <InsertAlert /> */}
-              <UpdateAlert />
-              {/* <DeleteAlert /> */}
-            </>
-          )}
-        </>
-      );
+      return <>{isAlertVisible && <UpdateAlert />}</>;
     case "DELETE":
-      return (
-        <>
-          {isAlertVisible && (
-            <>
-              {/* <InsertAlert /> */}
-              {/* <UpdateAlert /> */}
-              <DeleteAlert />
-            </>
-          )}
-        </>
-      );
+      return <>{isAlertVisible && <DeleteAlert />}</>;
   }
 };
 
