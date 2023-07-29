@@ -4,15 +4,51 @@ import { format } from "date-fns";
 
 const Record = ({ records }: any) => {
   const [filteredRecords, setFilteredRecords] = useState(records);
+  enum MonthList {
+    January = 1,
+    February,
+    March,
+    April,
+    May,
+    June,
+    July,
+    August,
+    September,
+    October,
+    November,
+    December,
+  }
 
   const handleSearch = (e: any) => {
     const filteredRows = records.filter((record: any) => {
-      const date = format(new Date(record.created_at), "Pp");
       return (
         record.employees.first_name.toLowerCase().includes(e.toLowerCase()) ||
-        record.employees.last_name.toLowerCase().includes(e.toLowerCase()) ||
-        String(date).match(String(e))
+        record.employees.last_name.toLowerCase().includes(e.toLowerCase())
       );
+    });
+    setFilteredRecords(filteredRows);
+  };
+
+  const handleSelectDay = (e: any) => {
+    const filteredRows = records.filter((record: any) => {
+      const date = format(new Date(record.created_at), "d");
+      return Number(date) === e;
+    });
+    setFilteredRecords(filteredRows);
+  };
+
+  const handleSelectMonth = (e: any) => {
+    const filteredRows = records.filter((record: any) => {
+      const date = format(new Date(record.created_at), "M");
+      return String(date).match(e);
+    });
+    setFilteredRecords(filteredRows);
+  };
+
+  const handleSelectYear = (e: any) => {
+    const filteredRows = records.filter((record: any) => {
+      const date = format(new Date(record.created_at), "y");
+      return String(date).match(e);
     });
     setFilteredRecords(filteredRows);
   };
@@ -31,30 +67,110 @@ const Record = ({ records }: any) => {
             </h1>
           </div>
 
-          {/* Search Bar */}
-          <div className="relative flex items-center gap-2 my-6">
-            <input
-              type="text"
-              name="search"
-              id="search"
-              className="px-2 py-1 bg-white border-2 rounded-md border-violet-400 dark:border-sky-400 focus:border-slate-700 focus:outline-none focus:ring-0 dark:text-white dark:bg-black dark:focus:border-slate-300 placeholder:text-sm contrast-more:placeholder-slate-500"
-              placeholder="Search Records"
-              onChange={(e) => handleSearch(e.target.value)}
-            />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="absolute w-4 h-4 left-[183px] text-slate-400"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+          <div className="flex flex-col items-center justify-between my-6 space-y-4 sm:flex-row sm:space-y-0">
+            {/* Search Bar */}
+            <div className="relative flex items-center gap-2">
+              <input
+                type="text"
+                name="search"
+                id="search"
+                className="px-2 py-1 bg-white border-2 rounded-md border-violet-400 dark:border-sky-400 focus:border-slate-700 focus:outline-none focus:ring-0 dark:text-white dark:bg-black dark:focus:border-slate-300 placeholder:text-sm contrast-more:placeholder-slate-500"
+                placeholder="Enter Name"
+                onChange={(e) => handleSearch(e.target.value)}
               />
-            </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="absolute w-4 h-4 left-[183px] text-slate-400"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                />
+              </svg>
+            </div>
+
+            <div className="flex space-x-3">
+              {/* Day Select Box */}
+              <div>
+                <select
+                  className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                  onChange={(e: any) => {
+                    const num: any = Number(e.target.value);
+                    handleSelectDay(num);
+                  }}
+                  required
+                >
+                  {(() => {
+                    const arr = [];
+
+                    for (let i = 1; i < 31; i++) {
+                      arr.push(
+                        <option key={i} value={i}>
+                          {i}
+                        </option>
+                      );
+                    }
+                    return arr;
+                  })()}
+                </select>
+              </div>
+
+              {/* Month Select Box */}
+              <div>
+                <select
+                  className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                  onChange={(e: any) => {
+                    const num: any = Number(e.target.value);
+                    handleSelectMonth(num);
+                  }}
+                  required
+                >
+                  {(() => {
+                    const arr = [];
+
+                    for (let i = 1; i < 13; i++) {
+                      arr.push(
+                        <option key={i} value={i}>
+                          {MonthList[i]}
+                        </option>
+                      );
+                    }
+                    return arr;
+                  })()}
+                </select>
+              </div>
+            </div>
+
+            {/* Year Search Bar */}
+            <div className="relative flex items-center gap-2">
+              <input
+                type="text"
+                name="search"
+                id="search"
+                className="px-2 py-1 bg-white border-2 rounded-md border-violet-400 dark:border-sky-400 focus:border-slate-700 focus:outline-none focus:ring-0 dark:text-white dark:bg-black dark:focus:border-slate-300 placeholder:text-sm contrast-more:placeholder-slate-500"
+                placeholder="Enter Year"
+                onChange={(e) => handleSelectYear(e.target.value)}
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="absolute w-4 h-4 left-[183px] text-slate-400"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                />
+              </svg>
+            </div>
           </div>
 
           <div className="w-full pb-6 overflow-x-auto rounded-lg">
