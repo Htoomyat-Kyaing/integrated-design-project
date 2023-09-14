@@ -1,0 +1,135 @@
+/* .top-bars {
+  background-color: rgba(248, 208, 241, 0.719);
+} */
+.search-box {
+  margin-left: 100px;
+  width: 200px;
+  height: 30px;
+}
+
+.dropbtn {
+  background-color: #011301;
+  color: white;
+  padding: 13px;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  width: 200px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 300px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: rgba(167, 159, 152, 0.911);
+}
+
+.profile {
+  display: grid;
+  height: 100%;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 0px;
+  place-items: center;
+  grid-gap: 0px;
+  /* background-color: rgba(248, 208, 241, 0.719); */
+}
+
+.male {
+  display: grid;
+  background-color: white;
+  height: 200px;
+  width: 200px;
+  place-items: center;
+  line-height: 10px;
+  border-radius: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  font-family: serif;
+}
+.employee-name {
+  color: grey;
+  font-weight: bold;
+}
+
+.pp {
+  height: 40px;
+  width: 50px;
+  border-radius: 50%;
+  border: 2px solid rgb(230, 206, 206);
+}
+.position {
+  margin-left: 30px;
+  font-weight: bold;
+}
+.progress1 {
+  width: 130px;
+}
+.progress2 {
+  width: 120px;
+}
+.progress3 {
+  width: 95px;
+}
+.progress4 {
+  width: 128px;
+}
+.progress5 {
+  width: 123px;
+}
+.progress6 {
+  width: 99px;
+}
+.progress7 {
+  width: 95px;
+}
+.progress8 {
+  width: 80px;
+}
+.progress9 {
+  width: 120px;
+}
+
+@media screen and (min-width: 250px) and (max-width: 480px) {
+  .profile {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .profile {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .profile {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
