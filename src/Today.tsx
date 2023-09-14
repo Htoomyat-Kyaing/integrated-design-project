@@ -40,6 +40,24 @@ const Today = ({ employees }: any) => {
     }
   };
 
+  // reset today status in employee
+  const resetForTomorrow = async (id: number) => {
+    const { data, error } = await supabase
+      .from("employees")
+      .update([
+        {
+          today: false,
+        },
+      ])
+      .eq("id", id)
+      .select();
+    if (data) {
+      console.log(data);
+    } else {
+      console.log(error);
+    }
+  };
+
   return (
     <main className="flex items-center justify-center h-full">
       <div className="flex flex-grow w-full h-full">
@@ -54,14 +72,14 @@ const Today = ({ employees }: any) => {
             </h1>
           </div>
 
-          <div className="relative flex flex-col items-center justify-between gap-2 my-6">
+          <div className="relative flex flex-col items-center justify-between gap-2 my-6 lg:flex-row">
             {/* Search Bar */}
             <div className="relative flex items-center gap-2">
               <input
                 type="text"
                 name="search"
                 id="search"
-                className="px-2 py-1 bg-white border-2 rounded-md  sm:w-2/3 md:w-full border-violet-400 dark:border-sky-400 focus:border-slate-700 focus:outline-none focus:ring-0 dark:text-white dark:bg-black dark:focus:border-slate-300 placeholder:text-sm contrast-more:placeholder-slate-500"
+                className="px-2 py-1 bg-white border-2 rounded-md sm:w-2/3 md:w-full border-violet-400 dark:border-sky-400 focus:border-slate-700 focus:outline-none focus:ring-0 dark:text-white dark:bg-black dark:focus:border-slate-300 placeholder:text-sm contrast-more:placeholder-slate-500"
                 placeholder={"Search Employee"}
                 onChange={(e) => handleSearch(e.target.value)}
               />
@@ -92,17 +110,29 @@ const Today = ({ employees }: any) => {
               </label>
             </div>
 
-            {/* Save Record */}
-            <button
-              className="px-6 py-2 font-semibold leading-5 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none dark:bg-sky-400 dark:hover:bg-sky-500 dark:text-black"
-              onClick={() => {
-                employees.forEach((emp: any) => {
-                  insertRecord(emp);
-                });
-              }}
-            >
-              Save Record
-            </button>
+            <div className="flex gap-4">
+              <button
+                className="px-6 py-2 font-semibold leading-5 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none dark:bg-sky-400 dark:hover:bg-sky-500 dark:text-black"
+                onClick={() => {
+                  employees.forEach((emp: any) => {
+                    insertRecord(emp);
+                  });
+                }}
+              >
+                Save Record
+              </button>
+
+              <button
+                className="px-6 py-2 font-semibold leading-5 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none dark:bg-sky-400 dark:hover:bg-sky-500 dark:text-black"
+                onClick={() => {
+                  employees.forEach((emp: any) => {
+                    resetForTomorrow(emp.id);
+                  });
+                }}
+              >
+                Reset
+              </button>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 gap-6 pb-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
