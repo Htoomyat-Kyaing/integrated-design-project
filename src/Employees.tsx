@@ -37,7 +37,7 @@ const Employees = ({ employees }: any) => {
             </h1>
           </div>
 
-          <div className="flex flex-col items-center justify-between gap-2 my-6">
+          <div className="flex flex-col items-center justify-between gap-2 my-6 lg:flex-row">
             {/* Search Bar */}
             <div className="relative flex items-center gap-2">
               <input

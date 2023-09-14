@@ -18,6 +18,10 @@ const Record = ({ records }: any) => {
     November,
     December,
   }
+  const [name, setName] = useState("");
+  const [day, setDay] = useState();
+  const [month, setMonth] = useState();
+  const [year, setYear] = useState("");
 
   const handleSearch = (e: any) => {
     const filteredRows = records.filter((record: any) => {
@@ -53,6 +57,24 @@ const Record = ({ records }: any) => {
     setFilteredRecords(filteredRows);
   };
 
+  const searchSelective = () => {
+    const filteredRows = records.filter((record: any) => {
+      const date = format(new Date(record.created_at), "P");
+      // return String(date).match(`${day}/${month}/${year}`);
+      // console.log(date);
+      return (
+        (record.employees.first_name
+          .toLowerCase()
+          .includes(name.toLowerCase()) ||
+          record.employees.last_name
+            .toLowerCase()
+            .includes(name.toLowerCase())) &&
+        String(date).match(`${month}/${day}/${year}`)
+      );
+    });
+    setFilteredRecords(filteredRows);
+  };
+
   return (
     <main className="flex flex-col items-center justify-center w-full h-full">
       <div className="flex flex-grow w-full h-full">
@@ -67,16 +89,20 @@ const Record = ({ records }: any) => {
             </h1>
           </div>
 
-          <div className="flex flex-col items-center justify-between my-6 space-y-4 sm:flex-row sm:space-y-0">
+          <div className="flex flex-col items-center justify-between my-6 space-y-4 lg:flex-row lg:space-y-0">
             {/* Search Bar */}
             <div className="relative flex items-center gap-2">
+              {/* Name */}
               <input
                 type="text"
                 name="search"
                 id="search"
                 className="px-2 py-1 bg-white border-2 rounded-md border-violet-400 dark:border-sky-400 focus:border-slate-700 focus:outline-none focus:ring-0 dark:text-white dark:bg-black dark:focus:border-slate-300 placeholder:text-sm contrast-more:placeholder-slate-500"
                 placeholder="Enter Name"
-                onChange={(e) => handleSearch(e.target.value)}
+                onChange={(e) => {
+                  handleSearch(e.target.value);
+                  setName(e.target.value);
+                }}
               />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -102,13 +128,14 @@ const Record = ({ records }: any) => {
                   onChange={(e: any) => {
                     const num: any = Number(e.target.value);
                     handleSelectDay(num);
+                    setDay(num);
                   }}
                   required
                 >
                   {(() => {
                     const arr = [];
 
-                    for (let i = 1; i < 31; i++) {
+                    for (let i = 1; i <= 31; i++) {
                       arr.push(
                         <option key={i} value={i}>
                           {i}
@@ -127,6 +154,7 @@ const Record = ({ records }: any) => {
                   onChange={(e: any) => {
                     const num: any = Number(e.target.value);
                     handleSelectMonth(num);
+                    setMonth(num);
                   }}
                   required
                 >
@@ -154,7 +182,10 @@ const Record = ({ records }: any) => {
                 id="search"
                 className="px-2 py-1 bg-white border-2 rounded-md border-violet-400 dark:border-sky-400 focus:border-slate-700 focus:outline-none focus:ring-0 dark:text-white dark:bg-black dark:focus:border-slate-300 placeholder:text-sm contrast-more:placeholder-slate-500"
                 placeholder="Enter Year"
-                onChange={(e) => handleSelectYear(e.target.value)}
+                onChange={(e) => {
+                  handleSelectYear(e.target.value);
+                  setYear(e.target.value);
+                }}
               />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -171,6 +202,13 @@ const Record = ({ records }: any) => {
                 />
               </svg>
             </div>
+
+            <button
+              className="px-6 py-2 font-semibold leading-5 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none dark:bg-sky-400 dark:hover:bg-sky-500 dark:text-black"
+              onClick={searchSelective}
+            >
+              Search
+            </button>
           </div>
 
           <div className="w-full pb-6 overflow-x-auto rounded-lg">
@@ -189,7 +227,7 @@ const Record = ({ records }: any) => {
                   </th>
                   <th className="px-4 py-3">
                     <button className="text-xl font-semibold">
-                      Date(DD/MM/YY)
+                      Date(MM/DD/YY)
                     </button>
                   </th>
                 </tr>
