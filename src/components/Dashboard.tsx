@@ -1,10 +1,10 @@
-import { supabase } from "../supabase/supabaseClient";
+// import { supabase } from "../supabase/supabaseClient";
 
 const Dashboard = ({ darkToggle }: any) => {
-  async function signOut() {
-    const { error } = await supabase.auth.signOut();
-    console.log(error);
-  }
+  // async function signOut() {
+  //   const { error } = await supabase.auth.signOut();
+  //   console.log(error);
+  // }
 
   return (
     <div className="sticky top-0 z-10 flex items-center justify-between w-full p-3 sm:p-4 md:p-5 lg:p-6 min-h-max bg-slate-600 dark:bg-slate-900">
@@ -37,7 +37,7 @@ const Dashboard = ({ darkToggle }: any) => {
         </svg>
       </label>
 
-      <div className="flex items-center gap-2">
+      {/* <div className="flex items-center gap-2">
         <label
           htmlFor="signout"
           className="hidden text-white md:block dark:text-sky-400"
@@ -63,7 +63,7 @@ const Dashboard = ({ darkToggle }: any) => {
             />
           </svg>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
