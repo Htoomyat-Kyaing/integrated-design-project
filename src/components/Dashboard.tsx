@@ -37,7 +37,7 @@ const Dashboard = ({ darkToggle }: any) => {
         </svg>
       </label>
 
-      <div className="flex items-center gap-2">
+      {/* <div className="flex items-center gap-2">
         <label
           htmlFor="signout"
           className="hidden text-white md:block dark:text-sky-400"
@@ -63,7 +63,7 @@ const Dashboard = ({ darkToggle }: any) => {
             />
           </svg>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
