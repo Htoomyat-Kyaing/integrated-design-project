@@ -6,7 +6,7 @@ This is a web application that I developed as an integrated design project durin
 
 - Mamba UI and Daisy UI for UI, and
 
-- Supabase for database.
+- Supabase for backend as a service.
  
 It provides a user-friendly interface for managing employees and related information. Currently, it is being deployed on Netlify. You can check it here! -  [https://integrated-design-project.netlify.app](https://integrated-design-project.netlify.app/)
 
